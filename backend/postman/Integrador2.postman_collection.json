@@ -1,0 +1,45 @@
+{
+  "info": {
+    "name": "Integrador 2 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "productoId", "value": "" }
+  ],
+  "item": [
+    { "name": "Health", "request": { "method": "GET", "url": "{{baseUrl}}/api/health" } },
+    { "name": "Listar productos", "request": { "method": "GET", "url": "{{baseUrl}}/api/productos" } },
+    {
+      "name": "Crear producto",
+      "event": [{ "listen": "test", "script": { "exec": ["if (pm.response.code === 201) pm.collectionVariables.set('productoId', pm.response.json().id);"] } }],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/productos",
+        "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Trompo luminoso\",\n  \"precio\": 4500,\n  \"stock\": 30,\n  \"marca\": \"Giro\",\n  \"categoria\": \"Clásicos\",\n  \"descripcionCorta\": \"Con luces LED\",\n  \"edadDesde\": 4,\n  \"edadHasta\": 12,\n  \"envio\": true,\n  \"foto\": \"https://picsum.photos/seed/trompo/400\"\n}" }
+      }
+    },
+    { "name": "Obtener producto por id", "request": { "method": "GET", "url": "{{baseUrl}}/api/productos/{{productoId}}" } },
+    {
+      "name": "Actualizar producto",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/productos/{{productoId}}",
+        "body": { "mode": "raw", "raw": "{\n  \"precio\": 5000,\n  \"stock\": 25\n}" }
+      }
+    },
+    { "name": "Eliminar producto", "request": { "method": "DELETE", "url": "{{baseUrl}}/api/productos/{{productoId}}" } },
+    {
+      "name": "Enviar carrito",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/carrito",
+        "body": { "mode": "raw", "raw": "[\n  { \"id\": \"{{productoId}}\", \"nombre\": \"Trompo luminoso\", \"precio\": 5000, \"cantidad\": 2 },\n  { \"nombre\": \"Pelota de fútbol\", \"precio\": 12000, \"cantidad\": 1 }\n]" }
+      }
+    },
+    { "name": "Listar pedidos", "request": { "method": "GET", "url": "{{baseUrl}}/api/carrito" } }
+  ]
+}
