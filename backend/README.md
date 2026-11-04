@@ -2,6 +2,13 @@
 
 API REST con **Node.js + Express + Mongoose** sobre **MongoDB Atlas**, con arquitectura MVC.
 
+## Deploy
+
+Desplegado en Railway: **https://api-production-ec4b.up.railway.app**
+
+- Health check: https://api-production-ec4b.up.railway.app/api/health
+- Productos: https://api-production-ec4b.up.railway.app/api/productos
+
 ## Estructura
 
 ```
